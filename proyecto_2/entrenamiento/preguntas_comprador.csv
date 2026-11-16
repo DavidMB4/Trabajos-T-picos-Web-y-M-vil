@@ -1,0 +1,72 @@
+pregunta,intencion
+hola,saludo
+hola buenas,saludo
+buenos dias,saludo
+buenas tardes,saludo
+buenas noches,saludo
+hola necesito ayuda,saludo
+buen dia,saludo
+que tal,saludo
+hola como estas,saludo
+hay alguien,saludo
+que herramientas tienen,catalogo
+tienen taladros,catalogo
+que kits tienen disponibles,catalogo
+me puedes mostrar el catalogo,catalogo
+que hay en renta,catalogo
+tienen rotomartillos,catalogo
+que herramientas de carpinteria tienen,catalogo
+tienen algo para pintura,catalogo
+muestrame lo que tienen,catalogo
+que kits de plomeria hay,catalogo
+que tienen de plomeria,catalogo
+herramientas para plomeria,catalogo
+tienen algo para plomeria,catalogo
+que tienen de carpinteria,catalogo
+herramientas para carpinteria,catalogo
+tienen herramientas para pintar,catalogo
+que hay para demolicion,catalogo
+tienen herramientas de electricidad,catalogo
+que hay de jardineria,catalogo
+cuales herramientas manejan,catalogo
+donde esta mi renta 1,rastreo_folio
+estado de mi pedido 2,rastreo_folio
+folio 3,rastreo_folio
+mi renta numero 4,rastreo_folio
+busco el folio 5,rastreo_folio
+donde esta mi folio DEM-202611-0001,rastreo_folio
+que paso con mi renta 6,rastreo_folio
+consultar folio 7,rastreo_folio
+mi pedido DEM-202611-0003,rastreo_folio
+como va mi renta 8,rastreo_folio
+por que me recomendaron ese kit,pregunta_recomendador
+como funciona el recomendador,pregunta_recomendador
+que herramienta me conviene para demoler un muro,pregunta_recomendador
+que me recomiendas para carpinteria,pregunta_recomendador
+cual es la diferencia entre herramienta y kit,pregunta_recomendador
+por que me dieron una herramienta y no un kit,pregunta_recomendador
+que necesito para pintar una habitacion,pregunta_recomendador
+me puedes recomendar algo para jardineria,pregunta_recomendador
+que herramienta necesito para instalar tuberias,pregunta_recomendador
+como se decide que herramienta me dan,pregunta_recomendador
+para que sirve el recomendador,pregunta_recomendador
+como pido una renta,como_rentar
+como puedo rentar una herramienta,como_rentar
+cuales son los pasos para rentar,como_rentar
+como se hace una renta,como_rentar
+quiero rentar una herramienta,como_rentar
+donde pido la renta,como_rentar
+como funciona la renta de herramientas,como_rentar
+que necesito para pedir una renta,como_rentar
+como solicito un kit,como_rentar
+cual es el proceso para rentar,como_rentar
+quien gano el partido,fuera_dominio
+cuanto es 2 mas 2,fuera_dominio
+me puedes hacer una receta de cocina,fuera_dominio
+cual es la capital de francia,fuera_dominio
+me cuentas un chiste,fuera_dominio
+que pelicula me recomiendas,fuera_dominio
+como esta el clima hoy,fuera_dominio
+puedes hacer mi tarea,fuera_dominio
+que es la inteligencia artificial,fuera_dominio
+me ayudas con otra cosa,fuera_dominio

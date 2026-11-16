@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renta de Herramientas - Sistema Inteligente</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --danger: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 3rem;
+    }
+    header {
+      background: #1e293b;
+      color: #fff;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 { font-size: 1.35rem; font-weight: 700; }
+    header .subtitle { font-size: 0.85rem; color: #94a3b8; }
+    .badge-info {
+      background: #334155;
+      color: #38bdf8;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    nav.tabs {
+      display: flex;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    nav.tabs button {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: none;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      font-size: 0.95rem;
+    }
+    nav.tabs button.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card h2 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #334155; }
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: var(--success); color: #fff; margin-top: 1rem; }
+    .btn-success:hover { background: #15803d; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    
+    /* Panel de Resultado */
+    .result-box {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .result-box.has-result {
+      border: 1px solid var(--border);
+      text-align: left;
+      background: #fafafa;
+    }
+    .badge-rule {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .badge-normal { background: var(--success-bg); color: var(--success); }
+    .badge-corrected { background: var(--warning-bg); color: var(--warning); }
+    .suggested-tool {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 0.35rem;
+    }
+    .rule-reason {
+      background: #fff;
+      border-left: 4px solid var(--warning);
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      margin: 0.75rem 0;
+      color: #78350f;
+    }
+    .confidence-bar {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+    }
+    .confidence-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 9999px;
+    }
+    .ranking-list {
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      list-style: none;
+    }
+    .ranking-list li { padding: 0.2rem 0; }
+    
+    /* Ticket de Folio */
+    .folio-ticket {
+      background: #ecfdf5;
+      border: 2px solid var(--success);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .folio-number { font-size: 2.2rem; font-weight: 900; color: var(--success); }
+
+    /* Grid de Catálogo */
+    .catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .tool-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tool-card h3 { font-size: 1rem; color: #1e293b; margin-bottom: 0.25rem; }
+    .tool-type { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b; margin-bottom: 0.5rem; }
+    .tool-price { font-size: 1.15rem; font-weight: 800; color: var(--primary); }
+    .tool-stock { font-size: 0.8rem; color: #059669; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Renta de Herramientas y Kits</h1>
+      <div class="subtitle">Herramienta o kit según el trabajo</div>
+    </div>
+    <div class="badge-info">Proyecto 1 - David Maldonado</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="cambiarTab('recomendador')">Recomendar y Rentar</button>
+    <button class="tab-btn" onclick="cambiarTab('catalogo')">Catálogo</button>
+    <button class="tab-btn" onclick="cambiarTab('folio')">Buscar Folio</button>
+  </nav>
+
+  <main>
+    <!-- TAB 1: RECOMENDADOR Y RENTA -->
+    <section id="tab-recomendador" class="tab-content active">
+      <div class="grid-2">
+        <!-- Formulario -->
+        <div class="card">
+          <h2>Datos del trabajo</h2>
+          <form id="form-recomendar" onsubmit="solicitarRecomendacion(event)">
+            <div class="form-group">
+              <label for="tipo_trabajo">Tipo de Trabajo</label>
+              <select id="tipo_trabajo" required>
+                <option value="demolicion">Demolición</option>
+                <option value="carpinteria">Carpintería</option>
+                <option value="plomeria">Plomería</option>
+                <option value="electricidad">Electricidad</option>
+                <option value="jardineria">Jardinería y Poda</option>
+                <option value="pintura">Pintura y Acabados</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="escala_trabajo">Escala del Trabajo</label>
+              <select id="escala_trabajo" required>
+                <option value="reparacion_menor">Reparación Menor (Casera)</option>
+                <option value="remodelacion_media" selected>Remodelación Media</option>
+                <option value="obra_mayor">Obra Mayor (Construcción / Civil)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="experiencia_usuario">Experiencia del Usuario</label>
+              <select id="experiencia_usuario" required>
+                <option value="principiante">Principiante (Bricolaje casero)</option>
+                <option value="intermedio" selected>Intermedio</option>
+                <option value="profesional">Profesional / Contratista</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="duracion_dias">Duración Estimada (Días)</label>
+              <input type="number" id="duracion_dias" min="1" max="30" value="2" required>
+            </div>
+
+            <div class="form-group">
+              <label for="area_trabajo">Área de Trabajo</label>
+              <select id="area_trabajo" required>
+                <option value="interior" selected>Interior (Casa / Depto)</option>
+                <option value="exterior">Exterior (Jardín / Fachada / Terreno)</option>
+                <option value="taller">Taller / Cuarto de trabajo</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btn-recomendar">Consultar recomendación</button>
+          </form>
+        </div>
+
+        <!-- Resultado y Confirmación -->
+        <div class="card">
+          <h2>Resultado de recomendación</h2>
+          <div id="resultado-box" class="result-box">
+            Ingresa las características de tu trabajo a la izquierda y presiona "Consultar".
+          </div>
+
+          <!-- Formulario de Renta (Oculto hasta obtener sugerencia) -->
+          <div id="seccion-confirmar" style="display: none; margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+            <h2>Confirmar renta</h2>
+            <div class="form-group">
+              <label for="cliente_nombre">Nombre del Cliente</label>
+              <input type="text" id="cliente_nombre" placeholder="Ej. David Maldonado" value="David Maldonado" required>
+            </div>
+            <button type="button" class="btn btn-success" onclick="confirmarRenta()">Generar Renta</button>
+          </div>
+
+          <!-- Ticket de Folio Generado -->
+          <div id="seccion-ticket" style="display: none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: CATÁLOGO -->
+    <section id="tab-catalogo" class="tab-content">
+      <div class="card">
+        <h2>Catálogo de herramientas</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Inventario disponible en el sistema.</p>
+        <div id="catalogo-lista" class="catalogo-grid">
+          Cargando inventario...
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CONSULTAR POR FOLIO -->
+    <section id="tab-folio" class="tab-content">
+      <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2>Consultar Renta por Folio</h2>
+        <div class="form-group">
+          <label for="input-folio">Introduce el Número de Folio:</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="number" id="input-folio" placeholder="Ej. 1" min="1" value="1">
+            <button class="btn btn-primary" style="width: auto; padding: 0 1.5rem;" onclick="buscarFolio()">Buscar</button>
+          </div>
+        </div>
+        <div id="resultado-folio" style="margin-top: 1rem;"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let ultimaRecomendacion = null;
+
+    function cambiarTab(nombre) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      
+      const tabTarget = document.getElementById('tab-' + nombre);
+      if (tabTarget) tabTarget.classList.add('active');
+      
+      event.target.classList.add('active');
+
+      if (nombre === 'catalogo') cargarCatalogo();
+    }
+
+    async function cargarCatalogo() {
+      const contenedor = document.getElementById('catalogo-lista');
+      try {
+        const res = await fetch('/api/catalogo/');
+        const data = await res.json();
+        contenedor.innerHTML = data.catalogo.map(h => `
+          <div class="tool-card">
+            <div>
+              <div class="tool-type">${h.tipo} | ${h.categoria}</div>
+              <h3>${h.nombre}</h3>
+              <p style="font-size: 0.85rem; color: #475569; margin: 0.4rem 0;">${h.descripcion}</p>
+            </div>
+            <div style="margin-top: 0.8rem; border-top: 1px dashed #e2e8f0; padding-top: 0.5rem; display: flex; justify-content: space-between; align-items: baseline;">
+              <span class="tool-price">$${h.precio_dia} <small style="font-size: 0.75rem; font-weight: normal; color: #64748b;">/día</small></span>
+              <span class="tool-stock">Stock: ${h.stock} uds</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        contenedor.innerHTML = '<div style="color:red;">Error al conectar con la API de catálogo.</div>';
+      }
+    }
+
+    async function solicitarRecomendacion(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-recomendar');
+      const box = document.getElementById('resultado-box');
+      btn.disabled = true;
+      btn.textContent = 'Analizando con Scikit-Learn...';
+
+      const payload = {
+        tipo_trabajo: document.getElementById('tipo_trabajo').value,
+        escala_trabajo: document.getElementById('escala_trabajo').value,
+        experiencia_usuario: document.getElementById('experiencia_usuario').value,
+        duracion_dias: parseInt(document.getElementById('duracion_dias').value),
+        area_trabajo: document.getElementById('area_trabajo').value
+      };
+
+      try {
+        const res = await fetch('/api/recomendar/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        ultimaRecomendacion = data;
+        ultimaRecomendacion.datos_trabajo = payload;
+
+        const badgeClass = data.corregido_por_reglas ? 'badge-corrected' : 'badge-normal';
+        const badgeText = data.corregido_por_reglas ? 'Ajustado por reglas de seguridad' : 'Sugerencia directa';
+        const confianzaPct = Math.round(data.confianza * 100);
+
+        box.className = 'result-box has-result';
+        box.innerHTML = `
+          <div class="badge-rule ${badgeClass}">${badgeText}</div>
+          <div class="suggested-tool">${data.eleccion}</div>
+          <div style="font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem;">
+            Tipo: <strong>${data.es_kit ? 'Kit Completo de Trabajo' : 'Herramienta Individual'}</strong>
+          </div>
+          <div style="margin: 0.6rem 0;">
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:600;">
+              <span>Confianza del modelo:</span>
+              <span>${confianzaPct}%</span>
+            </div>
+            <div class="confidence-bar">
+              <div class="confidence-fill" style="width: ${confianzaPct}%"></div>
+            </div>
+          </div>
+          ${data.corregido_por_reglas ? `<div class="rule-reason"><strong>Motivo de seguridad:</strong> ${data.motivo}</div>` : ''}
+          <div style="margin-top: 0.75rem;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #334155;">Alternativas evaluadas por el árbol:</span>
+            <ul class="ranking-list">
+              ${data.ranking.map(r => `<li>• ${r[0]} (${Math.round(r[1]*100)}%)</li>`).join('')}
+            </ul>
+          </div>
+        `;
+
+        document.getElementById('seccion-confirmar').style.display = 'block';
+        document.getElementById('seccion-ticket').style.display = 'none';
+
+      } catch (err) {
+        box.className = 'result-box';
+        box.innerHTML = '<div style="color:red;">Error al llamar a la API del recomendador.</div>';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Analizar con Árbol ML + Reglas';
+      }
+    }
+
+    async function confirmarRenta() {
+      if (!ultimaRecomendacion) return;
+      const cliente = document.getElementById('cliente_nombre').value.trim();
+      if (!cliente) {
+        alert('Por favor escribe tu nombre');
+        return;
+      }
+
+      const payload = {
+        cliente_nombre: cliente,
+        herramienta_sugerida: ultimaRecomendacion.eleccion,
+        tipo_trabajo: ultimaRecomendacion.datos_trabajo.tipo_trabajo,
+        duracion_dias: ultimaRecomendacion.datos_trabajo.duracion_dias,
+        es_kit: ultimaRecomendacion.es_kit,
+        confianza_modelo: ultimaRecomendacion.confianza,
+        corregido_por_reglas: ultimaRecomendacion.corregido_por_reglas,
+        motivo_regla: ultimaRecomendacion.motivo
+      };
+
+      try {
+        const res = await fetch('/api/rentas/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        const ticket = document.getElementById('seccion-ticket');
+        ticket.style.display = 'block';
+        ticket.innerHTML = `
+          <div class="folio-ticket">
+            <div style="font-size: 0.9rem; font-weight: 700; color: #047857;">¡RENTA REGISTRADA EN BASE DE DATOS!</div>
+            <div class="folio-number">FOLIO #${data.folio}</div>
+            <div style="font-size: 0.95rem; margin-top: 0.5rem; color: #1f2937;">
+              Cliente: <strong>${data.cliente}</strong><br>
+              Herramienta: <strong>${data.herramienta}</strong> (${data.duracion_dias} días)<br>
+              Costo Total Calculado: <strong>$${data.costo_total} MXN</strong><br>
+              Estado: <span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${data.estado}</span>
+            </div>
+            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 0.8rem;">
+              Fecha: ${data.fecha} | Guardado en db.sqlite3
+            </div>
+          </div>
+        `;
+        document.getElementById('seccion-confirmar').style.display = 'none';
+      } catch (err) {
+        alert('Error al registrar la renta en la base de datos.');
+      }
+    }
+
+    async function buscarFolio() {
+      const folio = document.getElementById('input-folio').value;
+      const resBox = document.getElementById('resultado-folio');
+      if (!folio) return;
+
+      try {
+        const res = await fetch(`/api/rentas/${folio}/`);
+        if (!res.ok) {
+          resBox.innerHTML = `<div style="color: #dc2626; padding: 1rem; background: #fee2e2; border-radius: 8px;">No se encontró ninguna renta con el Folio #${folio}.</div>`;
+          return;
+        }
+        const r = await res.json();
+        resBox.innerHTML = `
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+              <span style="font-size: 1.2rem; font-weight: 800; color: #2563eb;">Folio #${r.folio}</span>
+              <span style="background: #dcfce7; color: #16a34a; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem;">${r.estado}</span>
+            </div>
+            <div style="margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.7;">
+              <div><strong>Cliente:</strong> ${r.cliente}</div>
+              <div><strong>Herramienta:</strong> ${r.herramienta_sugerida} ${r.es_kit ? '(Kit de Trabajo)' : '(Individual)'}</div>
+              <div><strong>Tipo de obra:</strong> ${r.tipo_trabajo} (${r.duracion_dias} días)</div>
+              <div><strong>Costo Total:</strong> $${r.costo_total} MXN</div>
+              <div><strong>Confianza del modelo:</strong> ${Math.round(r.confianza_modelo * 100)}%</div>
+              <div><strong>¿Corregido por regla?:</strong> ${r.corregido_por_reglas ? 'Sí (Por seguridad)' : 'No (Directa)'}</div>
+              ${r.motivo_regla ? `<div style="font-size: 0.85rem; color: #b45309; background: #fffbeb; padding: 0.4rem 0.6rem; border-radius: 4px; margin-top: 0.4rem;"><strong>Motivo:</strong> ${r.motivo_regla}</div>` : ''}
+              <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">Registrado el: ${r.fecha_creacion}</div>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        resBox.innerHTML = '<div style="color:red;">Error al consultar el folio.</div>';
+      }
+    }
+  </script>
+</body>
+</html>
