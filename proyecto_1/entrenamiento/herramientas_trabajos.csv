@@ -1,0 +1,51 @@
+tipo_trabajo,escala_trabajo,experiencia_usuario,duracion_dias,area_trabajo,herramienta_recomendada
+demolicion,reparacion_menor,intermedio,1,interior,Rotomartillo individual
+demolicion,reparacion_menor,profesional,1,interior,Rotomartillo individual
+demolicion,reparacion_menor,intermedio,2,interior,Rotomartillo individual
+demolicion,remodelacion_media,profesional,2,interior,Demoledor hexagonal 15kg
+demolicion,remodelacion_media,intermedio,3,exterior,Demoledor hexagonal 15kg
+demolicion,remodelacion_media,profesional,3,exterior,Kit Demolicion Completo
+demolicion,obra_mayor,profesional,5,exterior,Kit Demolicion Completo
+demolicion,obra_mayor,intermedio,7,interior,Kit Demolicion Completo
+demolicion,obra_mayor,profesional,10,exterior,Kit Demolicion Completo
+carpinteria,reparacion_menor,principiante,1,interior,Lijadora orbital individual
+carpinteria,reparacion_menor,intermedio,1,interior,Lijadora orbital individual
+carpinteria,reparacion_menor,principiante,2,interior,Lijadora orbital individual
+carpinteria,reparacion_menor,intermedio,2,taller,Sierra circular de mano
+carpinteria,remodelacion_media,intermedio,2,taller,Sierra circular de mano
+carpinteria,remodelacion_media,profesional,3,interior,Sierra circular de mano
+carpinteria,remodelacion_media,intermedio,3,interior,Kit Carpinteria Integral
+carpinteria,obra_mayor,profesional,5,interior,Kit Carpinteria Integral
+carpinteria,obra_mayor,intermedio,8,taller,Kit Carpinteria Integral
+plomeria,reparacion_menor,principiante,1,interior,Bomba destapadora individual
+plomeria,reparacion_menor,intermedio,1,interior,Bomba destapadora individual
+plomeria,reparacion_menor,principiante,2,interior,Bomba destapadora individual
+plomeria,remodelacion_media,intermedio,2,interior,Termofusora digital PPR
+plomeria,remodelacion_media,profesional,3,interior,Termofusora digital PPR
+plomeria,remodelacion_media,intermedio,3,interior,Kit Plomeria Profesional
+plomeria,obra_mayor,profesional,5,exterior,Kit Plomeria Profesional
+plomeria,obra_mayor,profesional,8,exterior,Kit Plomeria Profesional
+electricidad,reparacion_menor,principiante,1,interior,Taladro percutor individual
+electricidad,reparacion_menor,intermedio,1,interior,Taladro percutor individual
+electricidad,reparacion_menor,principiante,2,interior,Taladro percutor individual
+electricidad,remodelacion_media,intermedio,2,interior,Ranuradora de muros
+electricidad,remodelacion_media,profesional,3,interior,Ranuradora de muros
+electricidad,remodelacion_media,intermedio,3,interior,Kit Electricidad Completo
+electricidad,obra_mayor,profesional,5,interior,Kit Electricidad Completo
+electricidad,obra_mayor,profesional,8,interior,Kit Electricidad Completo
+jardineria,reparacion_menor,principiante,1,exterior,Cortasetos individual
+jardineria,reparacion_menor,intermedio,1,exterior,Cortasetos individual
+jardineria,reparacion_menor,principiante,2,exterior,Cortasetos individual
+jardineria,remodelacion_media,intermedio,2,exterior,Desbrozadora a gasolina
+jardineria,remodelacion_media,profesional,3,exterior,Desbrozadora a gasolina
+jardineria,remodelacion_media,intermedio,3,exterior,Kit Jardineria y Poda
+jardineria,obra_mayor,profesional,5,exterior,Kit Jardineria y Poda
+jardineria,obra_mayor,profesional,7,exterior,Kit Jardineria y Poda
+pintura,reparacion_menor,principiante,1,interior,Pistola de pintar individual
+pintura,reparacion_menor,intermedio,1,interior,Pistola de pintar individual
+pintura,reparacion_menor,principiante,2,interior,Pistola de pintar individual
+pintura,remodelacion_media,intermedio,2,interior,Lijadora de tablaroca y yeso
+pintura,remodelacion_media,profesional,3,interior,Lijadora de tablaroca y yeso
+pintura,remodelacion_media,intermedio,3,interior,Kit Pintura y Acabados
+pintura,obra_mayor,profesional,5,exterior,Kit Pintura y Acabados
+pintura,obra_mayor,profesional,8,exterior,Kit Pintura y Acabados
